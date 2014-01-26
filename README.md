@@ -129,6 +129,14 @@ Modifies your image to have a smooth/warm effect.
 ![Toaster Example](http://levineuland.com/github/optimus-examples-lena/lena-toaster.jpg)
 
 
+###Gif*
+Bypasses all effects and returns the original, unaltered gif. Allows for animated gifs to pass through the `{optimus}` tag.
+
+`effect='gif'`
+
+![Gif Example](http://levineuland.com/github/optimus-examples-lena/lena-gif.gif)
+
+
 ###Geocities*
 Modifies your image to have a look reminiscent of the 90's.
 
