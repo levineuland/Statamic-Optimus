@@ -17,9 +17,10 @@ Optimus is an enhanced version of the Statamic transform tag, adding additional 
 ---
 ## Basic Installation
 
-1. Clone the repo into the `_addons` directory of your Statamic site  
-2. Insert a `{{ optimus }}` tag into a page on your site
-3. Add a `src` atrribute with a path to your image and use any of the modifiers below
+1. Create a folder named `optimus` in the `_addons` directory of your Statamic site 
+2. Put the `pi.optimus.php` file into that new directory
+3. Insert a `{{ optimus }}` tag into a page on your site
+4. Add a `src` atrribute with a path to your image and use any of the modifiers below
 
 **Warning:** Complex image processing can increase the load time for your website. This plugin leverages the same approach as the Transform plugin, so after the first time you see the image it will not attempt to regenerate it.
 
