@@ -276,9 +276,14 @@ Overlays a vertical gradient with a screen effect. Currently does not support th
 ![Solid Example](http://levineuland.com/github/optimus-examples-lena/lena-fadeoutscreen.jpg)
 
 ---
+## Transform Settings
+
+Optimus supports all existing Transform tag attributues (Based on the version included in Statamic v1.6.7). You can learn more about these settings on the [official Statatmic website](http://statamic.com/learn/documentation/tags/transform).
+
+---
 ## The End
 
-If you like this plugin and want to see new features added please [star this repository](https://github.com/levineuland/Statamic-Optimus/star) to let me know you are interested. Have a feature or effect you'd like to see added? Send me a message on Twitter [@levineuland](http://twitter.com/levineuland/).
+If you like this plugin please [star this repository](https://github.com/levineuland/Statamic-Optimus/star) to let me know. Have a feature or effect you'd like to see added? Send me a message on Twitter [@levineuland](http://twitter.com/levineuland/).
 
 
 ## Version History
