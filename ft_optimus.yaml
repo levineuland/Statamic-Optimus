@@ -1,0 +1,107 @@
+title: Optimus Example Fieldtype
+hide: true
+fields:
+	adjustment_options:
+		display: Adjustment Options
+		type: grid
+		starting_rows: 1
+		min_rows: 1
+		max_rows: 1
+		fields:
+			brightness:
+			  display: Brightness
+			  type: text
+			  instructions: 
+			      below: Value from 0.0 - 1.0
+			contrast:
+			  display: Contrast
+			  type: text
+			  instructions: 
+			      below: Value from 0.0 - 1.0
+	effect_options:
+		display: Effect Options
+		type: grid
+		starting_rows: 1
+		min_rows: 1
+		max_rows: 1
+		fields:
+			effect_mode:
+			  display: Type
+			  type: select
+			  options:
+			  	none: None
+			  	blur: Blur
+			  	pixelate: Pixelate
+			  	greyscale: Greyscale
+			  	sepia: Sepia			  	
+			  	noir: Noir
+			  	nashville: Nashville
+			  	gotham: Gotham
+			  	lomo: Lomo
+			  	toaster: Toaster
+			  	gif: Animated Gif
+			  	geocities: Geocities
+			effect_strength:
+			  display: Strength
+			  type: text
+			  instructions: 
+			      below: Value from 0.0 - 1.0
+	blend_options:
+		display: Blend Options
+		type: grid
+		starting_rows: 1
+		min_rows: 1
+		max_rows: 1
+		fields:
+			blend_mode:
+			  display: Blend Mode
+			  type: select
+			  options:
+			   none: None
+			   colorize: Colorize
+			   darken: Darken
+			   multiply: Multiply
+			   color_burn: Color Burn
+			   screen: Screen
+			   color_dodge: Color Dodge
+			   overlay: Overlay
+			   hard_light: Hard Light
+			   difference: Difference
+			   hue: Hue
+			   exclusion: Exclusion
+			blend_color:
+			  display: Blend Color
+			  type: color
+			  show_input: true
+			  width: 25%
+			blend_opacity:
+			  display: Opacity
+			  type: text
+			  instructions: 
+			      below: Value from 0.0 - 1.0
+	cover_options:
+		display: Cover Options
+		type: grid
+		starting_rows: 1
+		min_rows: 1
+		max_rows: 1
+		fields:
+			cover_mode:
+			  display: Type
+			  type: select
+			  options:
+			   none: None
+			   solid: Solid
+			   fade_out: Fade Out
+			   fade_out_multiply: Fade Out (Multiply)
+			   fade_out_screen: Fade Out (Screen)
+			cover_color:
+			  display: Color
+			  type: color
+			  show_input: true
+			  width: 25%
+			cover_opacity:
+			  display: Opacity
+			  type: text
+			  instructions: 
+			      below: Value from 0.0 - 1.0
