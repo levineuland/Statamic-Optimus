@@ -25,7 +25,7 @@ fields:
 		min_rows: 1
 		max_rows: 1
 		fields:
-			effect_mode:
+			effect:
 			  display: Type
 			  type: select
 			  options:
@@ -86,7 +86,7 @@ fields:
 		min_rows: 1
 		max_rows: 1
 		fields:
-			cover_mode:
+			cover_type:
 			  display: Type
 			  type: select
 			  options:

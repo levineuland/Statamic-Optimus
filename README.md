@@ -287,6 +287,7 @@ If you like this plugin please [star this repository](https://github.com/levineu
 
 
 ## Version History
+1.0.1 - Bug Fixes
 1.0 - Official Release
 
 

@@ -22,7 +22,7 @@ class Plugin_optimus extends Plugin
 
     public $meta = array(
         'name'       => 'Optimus',
-        'version'    => '1.0',
+        'version'    => '1.0.1',
         'author'     => 'Levi Neuland',
         'author_url' => 'http://levineuland.com'
     );
@@ -291,6 +291,15 @@ class Plugin_optimus extends Plugin
         }
 
 
+
+        // Quick Error handling
+        if (!$has_imagick) { 
+            if (($effect && array_key_exists($effect, $imagick_effects)) || ($blend_mode && array_key_exists($blend_mode, $imagick_effects)) || ($cover_type && array_key_exists($cover_type, $imagick_effects))) {
+                $this->log->warn("Attempted to use an Optimus feature that your server doesn't support. Install ImageMagick and IMagick on your sever to use these features.");
+            }
+        }
+
+
         /*
         |--------------------------------------------------------------------------
         | Create Image
@@ -482,7 +491,7 @@ class Plugin_optimus extends Plugin
         if($blend_mode === 'colorize' && $blend_color) {
             imagefilter($image->resource, IMG_FILTER_COLORIZE, $blend_r, $blend_g, $blend_b, (127-($blend_opacity*127)));
         }
-
+        
         //Check for available IMagick blends
         if ($has_imagick && ($blend_mode || $cover_type)){
 
@@ -523,12 +532,13 @@ class Plugin_optimus extends Plugin
         if ($cover_type === 'solid' && $cover_color) {
             $alpha = 127 * $cover_opacity;
             $alpha = 127-$alpha;
-            $cover = imagecreatetruecolor(30, 30);
+            $cover = imagecreatetruecolor($image->width, $image->height);
 
             $color = imagecolorallocatealpha($cover, $cover_r, $cover_g, $cover_b, $alpha);
             imagefill($cover, 0, 0, $color);
             imagesavealpha($cover, TRUE);
             imagesettile($image->resource, $cover);
+            imagealphablending($image->resource, true);
             imagefilledrectangle($image->resource, 0, 0, $image->width, $image->height, IMG_COLOR_TILED);
         }
         if ($cover_type === 'fade_out' && $cover_color) {
@@ -546,7 +556,9 @@ class Plugin_optimus extends Plugin
                 $new_color = imagecolorallocatealpha($output, $cover_r, $cover_g, $cover_b, $alpha);
                 imageline($output, 0, $y, $width, $y, $new_color);
             }
+            imagealphablending($input, true);
             imagecopyresampled($input, $output, 0, 0, 0, 0, $width, $height, $width, $height);
+
             $image->resource = $input;
         }
 
