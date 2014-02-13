@@ -39,7 +39,12 @@ fields:
 			  	gotham: Gotham
 			  	lomo: Lomo
 			  	toaster: Toaster
-			  	gif: Animated Gif
+			  	gif: Animated GIF
+			  	svg: Raw SVG
+			  	noise_overlay: Noise (Overlay)
+			  	noise_colorburn: Noise (Overlay)
+			  	noise_screen: Noise (Screen)
+			  	noise_multiply: Noise (Multiply)
 			  	geocities: Geocities
 			effect_strength:
 			  display: Strength
