@@ -257,7 +257,7 @@ class Plugin_optimus extends Plugin
         // Check if we've already built this image before
         if (File::exists($new_image_path)) {
 
-           // return File::cleanURL($new_image_path);
+           return File::cleanURL($new_image_path);
         }
 
         /*
