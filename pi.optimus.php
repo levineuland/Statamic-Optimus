@@ -6,7 +6,7 @@ use Intervention\Image\Image;
  * Plugin_optimus
  * Enhancement of the original transform plugin.
  * @author  Levi Neuland <say@hellolevi.com>
- *
+ * @version 1.1.0
  * @link    https://github.com/levineuland/Statamic-Optimus/
  *
  *
@@ -22,7 +22,7 @@ class Plugin_optimus extends Plugin
 
     public $meta = array(
         'name'       => 'Optimus',
-        'version'    => '1.0.1',
+        'version'    => '1.1.0',
         'author'     => 'Levi Neuland',
         'author_url' => 'http://levineuland.com'
     );
@@ -43,15 +43,25 @@ class Plugin_optimus extends Plugin
 
         // Set full system path
         $image_path = Path::tidy(BASE_PATH . '/' . $image_src);
+        $extension = File::getExtension($image_path);
 
-        // Check if image exists before doing anything.
-        if ( ! File::isImage($image_path)) {
+        $effect = $this->fetchParam('effect', false);
 
+        //Check for SVG
+
+        if ($effect === 'svg') {
+            if (File::exists($image_path)) {
+            $svg = simplexml_load_file($image_path);
+            return $svg->asXML();
+                //return File::cleanURL($image_path);
+           } else {
+                Log::error("Could not find requested image to transform: " . $image_path, "core", "Optimus");
+            }
+        } else if ( ! File::isImage($image_path)) {
+            // Check if image exists before doing anything.
             Log::error("Could not find requested image to transform: " . $image_path, "core", "Optimus");
-
             return;
-        }
-
+        } 
 
         /*
         |--------------------------------------------------------------------------
@@ -113,7 +123,7 @@ class Plugin_optimus extends Plugin
         $blend_mode  = $this->fetchParam('blend_mode', false);
         $blend_opacity  = $this->fetchParam('blend_opacity', 1, 'is_numeric');
         $blend_color = $this->fetchParam('blend_color', false);
-        $effect = $this->fetchParam('effect', false);
+
         $effect_strength = $this->fetchParam('effect_strength', 1, 'is_numeric');
         $cover_type = $this->fetchParam('cover_type', false);
         $cover_color = $this->fetchParam('cover_color', false);
@@ -122,7 +132,7 @@ class Plugin_optimus extends Plugin
         $contrast = $this->fetchParam('contrast', false, 'is_numeric');
 
         $blend_mode = $blend_mode === 'none' ? false : $blend_mode;
-        $effect = $effect === 'none' ? false : $effect;
+        $effect = $effect === 'none' ? false : $effect;      
         $cover_type = $cover_type === 'none' ? false : $cover_type;
 
 
@@ -143,9 +153,6 @@ class Plugin_optimus extends Plugin
 
         // Late modified time of original image
         $last_modified = File::getLastModified($image_path);
-
-        // Find .jpg, .png, etc
-        $extension = File::getExtension($image_path);
 
         // Filename with the extension removed so we can append our unique filename flags
         $stripped_image_path = str_replace('.' . $extension, '', $image_path);
@@ -178,7 +185,12 @@ class Plugin_optimus extends Plugin
                 'geocities'   => 'geocities',
                 'sepia'       => 'sepia',
                 'toaster'     => 'toaster',
-                'lomo'        => 'lomo'
+                'lomo'        => 'lomo',
+                'noise'       => Imagick::COMPOSITE_OVERLAY,
+                'noise_multiply' => Imagick::COMPOSITE_MULTIPLY,
+                'noise_screen' => Imagick::COMPOSITE_SCREEN,
+                'noise_overlay' => Imagick::COMPOSITE_OVERLAY,
+                'noise_colorburn' => Imagick::COMPOSITE_COLORBURN
             );
             $has_imagick = true;
         }
@@ -245,7 +257,7 @@ class Plugin_optimus extends Plugin
         // Check if we've already built this image before
         if (File::exists($new_image_path)) {
 
-            return File::cleanURL($new_image_path);
+           // return File::cleanURL($new_image_path);
         }
 
         /*
@@ -450,6 +462,15 @@ class Plugin_optimus extends Plugin
                         $this->setContrast($ppimage, 5);
                         $update = true;
                     break;
+                    case 'noise':
+                    case 'noise_overlay':
+                    case 'noise_multiply':
+                    case 'noise_screen':
+                    case 'noise_colorburn':
+                        $layerOverlay = $this->getNoisePanel($effect_strength,$width,$height);
+                        $ppimage->compositeImage($layerOverlay, $imagick_effects[$effect], 0, 0); 
+                        $update = true;
+                    break;
                     case 'kelvin':
 
                     break;
@@ -585,6 +606,14 @@ class Plugin_optimus extends Plugin
         $layerOverlay->newImage($w,$h, new ImagickPixel('none'));
 
         $layerOverlay->drawImage($draw);
+        return $layerOverlay;
+    }
+    private function getNoisePanel($op,$w,$h) {
+        $layerOverlay = new Imagick();
+        $layerOverlay->newImage($w,$h, new ImagickPixel('none'));
+        $layerOverlay->addNoiseImage(Imagick::NOISE_RANDOM,Imagick::CHANNEL_ALL);
+        $layerOverlay->modulateImage(100, 0, 100); 
+        $layerOverlay->setImageOpacity($op);
         return $layerOverlay;
     }
     private function setContrast($obj, $amount) {
