@@ -160,7 +160,36 @@ class Plugin_optimus extends Plugin
 
         //Local to check for existence for Imagick
         $has_imagick = false;
-
+        $imagick_effects = array(
+                'darken'      => 'moop',
+                'multiply'    => 'moop',
+                'color_burn'  => 'moop',
+                'lighten'     => 'moop',
+                'screen'      => 'moop',
+                'color_dodge' => 'moop',
+                'linear_dodge'=> 'moop',
+                'overlay'     => 'moop',
+                'hard_light'  => 'moop',
+                'difference'  => 'moop',
+                'hue'         => 'moop',
+                'saturation'  => 'moop',
+                'exclusion'   => 'moop',
+                'fade_out_multiply'    => 'fade_out_multiply',
+                'fade_out_screen'    => 'fade_out_screen',
+                'plasma_out'     => 'plasma_out',
+                'nashville'   => 'nashville',
+                'noir'        => 'noir',
+                'gotham'      => 'gotham',
+                'geocities'   => 'geocities',
+                'sepia'       => 'sepia',
+                'toaster'     => 'toaster',
+                'lomo'        => 'lomo',
+                'noise'       => 'moop',
+                'noise_multiply' => 'moop',
+                'noise_screen' => 'moop',
+                'noise_overlay' => 'moop',
+                'noise_colorburn' => 'moop'
+        );
         if(class_exists("Imagick")){
             $imagick_effects = array(
                 'darken'      => Imagick::COMPOSITE_DARKEN,
